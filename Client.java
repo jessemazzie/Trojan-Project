@@ -3,10 +3,16 @@ import java.awt.*;
 
 public class Client extends JFrame {
     Client() {
+        JPanel containerPanel;
         Container cp;
         cp = getContentPane();
-        
 
+        containerPanel = new JPanel(new GridLayout(5, 10));
+
+        for(int i = 0; i < 50; i++)
+            containerPanel.add(new SmartPanel());
+
+        cp.add(containerPanel);
         setupMainFrame();
     }
 
