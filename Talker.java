@@ -31,6 +31,10 @@ public class Talker {
         System.out.println("From: " + ID + "\nMessage: " + message + "\n");
     }
 
+    /**
+     * @return a line of text from the BufferedReader
+     * @throws IOException
+     */
     public String receive() throws IOException {
         return reader.readLine();
     }
@@ -40,6 +44,7 @@ public class Talker {
      * @param ID
      */
     public void setID(String ID) {
+        System.out.println("ID set to: " + ID);
         this.ID = ID;
     }
 }
