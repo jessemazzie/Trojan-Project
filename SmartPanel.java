@@ -19,19 +19,19 @@ public class SmartPanel extends JPanel implements MouseListener {
      * @param e
      */
     @Override
-    public void mouseEntered(MouseEvent e) {
+    public void mouseEntered(MouseEvent me) {
         setBackground(new Color(rand.nextInt(256), rand.nextInt(256), rand.nextInt(256)));
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {}
+    public void mouseClicked(MouseEvent me) {}
 
     @Override
-    public void mousePressed(MouseEvent e) {}
+    public void mousePressed(MouseEvent me) {}
 
     @Override
-    public void mouseReleased(MouseEvent e) {}
+    public void mouseReleased(MouseEvent me) {}
 
     @Override
-    public void mouseExited(MouseEvent e) {}
+    public void mouseExited(MouseEvent me) {}
 }

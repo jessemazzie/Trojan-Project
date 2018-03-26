@@ -24,6 +24,7 @@ public class Talker {
 
         reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
         dos = new DataOutputStream(s.getOutputStream());
+        System.out.println("Server talker initiated");
     }
 
     public void send(String message) throws IOException {
