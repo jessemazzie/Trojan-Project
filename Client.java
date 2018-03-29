@@ -1,25 +1,27 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class Client extends JFrame {
-    Talker t;
+public class Client extends JFrame implements ActionListener {
+    Talker talker;
+    CommandHandler ch;
+    Timer timer;
 
     Client() {
         JPanel containerPanel;
         Container cp;
         cp = getContentPane();
 
+        timer = new Timer(10000, this);
+        timer.setActionCommand("TIMER");
+        timer.start();
+
         containerPanel = new JPanel(new GridLayout(5, 10));
 
         for(int i = 0; i < 50; i++)
             containerPanel.add(new SmartPanel());
-
-        try {
-            t = new Talker("127.0.0.1", 555, "CLI");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         cp.add(containerPanel);
         setupMainFrame();
@@ -39,5 +41,12 @@ public class Client extends JFrame {
         setTitle("Fun game that is not a trojan.");
 
         setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        if(ae.getActionCommand().equals("TIMER") && talker == null) {
+            SwingUtilities.invokeLater(ch);
+        }
     }
 }

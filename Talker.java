@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Talker {
@@ -18,12 +17,13 @@ public class Talker {
         reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
         dos = new DataOutputStream(s.getOutputStream());
         this.ID = ID;
+        System.out.println("Talker with ID: " + ID + " initiated.");
     }
 
-    Talker(Socket s) throws IOException {
-
+    Talker(Socket s, String ID) throws IOException {
         reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
         dos = new DataOutputStream(s.getOutputStream());
+        this.ID = ID;
         System.out.println("Server talker initiated");
     }
 
@@ -37,6 +37,9 @@ public class Talker {
      * @throws IOException
      */
     public String receive() throws IOException {
+        String message;
+        message = reader.readLine();
+        System.out.println("Message: " + message + " received by: " + ID);
         return reader.readLine();
     }
 
