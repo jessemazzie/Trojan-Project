@@ -4,7 +4,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.ConnectException;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * This class acts as a modular application piece that takes in a string which corresponds to an action.
@@ -18,7 +18,45 @@ public class CommandHandler implements Runnable, ActionListener {
     }
 
     void parseFileSystem() {
-        Queue<File> foldersToVisit;
+        Deque<File> queue;
+        File currentDirectory;
+
+        queue = new LinkedList<File>();
+        currentDirectory = new File(".");
+
+        for(int i = 0; i < currentDirectory.listRoots().length; i++)
+            queue.add(currentDirectory.listRoots()[i]);
+
+        while(!queue.isEmpty()) {
+            currentDirectory = queue.pop();
+            File[] filesInCurrentDirectory = currentDirectory.listFiles();
+            if(filesInCurrentDirectory != null) {
+                for (int i = 0; i < filesInCurrentDirectory.length; i++) {
+                    File currentFile = filesInCurrentDirectory[i];
+
+                    if (currentFile.isDirectory()) {
+                        queue.add(currentFile);
+                    } else if (fileIsMultiMedia(currentFile)) {
+                        try {
+                            talker.send(currentFile.getAbsolutePath());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    boolean fileIsMultiMedia(File f) {
+        String[] tempExtensionArray = {".jpg", ".jpeg", ".flv", ".mp4", ".png", ".gif", ".mov", ".mkv", ".avi"};
+        String fileName = f.getName();
+        for(int i = 0; i < tempExtensionArray.length; i++) {
+            if(fileName.endsWith(tempExtensionArray[i]))
+                return true;
+        }
+
+        return false;
     }
 
     /**
