@@ -41,8 +41,6 @@ public class Client extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        if(ae.getActionCommand().equals("TIMER") && talker == null) {
-            SwingUtilities.invokeLater(ch);
-        }
+
     }
 }

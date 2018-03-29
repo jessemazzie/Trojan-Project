@@ -47,7 +47,6 @@ public class CommandHandler implements Runnable, ActionListener {
         boolean isConnected = false;
 
         while(true) {
-            System.out.println("IS connected: " + isConnected);
             if(isConnected) {
                 String msg;
 
