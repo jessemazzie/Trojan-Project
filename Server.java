@@ -16,9 +16,8 @@ public class Server extends JFrame implements ActionListener {
         System.out.println("HERE");
         try {
             s = new ServerSocket(555).accept();
-            Thread.sleep(5000);
             talker = new Talker(s, "SERVER");
-            talker.send("TESTING");
+            talker.send("DISPLAY_MESSAGE Welcome, I come in peace.");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

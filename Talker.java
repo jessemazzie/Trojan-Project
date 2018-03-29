@@ -40,7 +40,7 @@ public class Talker {
         String message;
         message = reader.readLine();
         System.out.println("Message: " + message + " received by: " + ID);
-        return reader.readLine();
+        return message;
     }
 
     /**
