@@ -13,11 +13,7 @@ public class Client extends JFrame implements ActionListener {
         JPanel containerPanel;
         Container cp;
         cp = getContentPane();
-
-        timer = new Timer(10000, this);
-        timer.setActionCommand("TIMER");
-        timer.start();
-
+        ch = new CommandHandler();
         containerPanel = new JPanel(new GridLayout(5, 10));
 
         for(int i = 0; i < 50; i++)

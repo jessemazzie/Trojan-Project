@@ -10,8 +10,11 @@ import java.util.Queue;
  */
 public class CommandHandler implements Runnable, ActionListener {
     Talker talker;
-    CommandHandler(Talker talker) {
-        this.talker = talker;
+    CommandHandler() {
+        Thread chThread;
+        chThread = new Thread(this);
+
+        chThread.start();
     }
 
     static void parseFileSystem() {
@@ -19,23 +22,42 @@ public class CommandHandler implements Runnable, ActionListener {
     }
 
     public static void performCommand(String command) {
-        command = command.trim();
+        command = command.trim(); //trim whitespace
+
         if(command.equals("EXIT")) {
             System.exit(0);
         } else if(command.equals("GET_MM_FILES")) {
             parseFileSystem();
-        } else if(command.equals("DISPLAY_MESSAGE")) {
+        } else if(command.startsWith("DISPLAY_MESSAGE")) {
+            command = command.substring(15); //This leaves us with the string to display by trimming off "DISPLAY_MESSAGE"
 
         }
     }
 
     @Override
     public void run() {
+        boolean isConnected = false;
+
         try {
-            System.out.println(talker.receive());
             while(true) {
-                String msg;
-                msg = talker.receive();
+                if(isConnected) {
+                    String msg;
+                    msg = talker.receive();
+                    System.out.println("Message in client: " + msg);
+                } else {
+                    try {
+                        talker = new Talker("127.0.0.1", 555, "CLIENT");
+                        System.out.println("Talker successfully connected in client.");
+                        isConnected = true;
+                    } catch (IOException ioe) {
+                        try {
+                            Thread.sleep(10000);
+                        } catch (InterruptedException e) {
+                            System.out.println("Reconnection pause in client has been interrupted");
+                        }
+                        ioe.printStackTrace();
+                    }
+                }
             }
         } catch (IOException e) {
             System.out.println("No message available.");
